@@ -157,7 +157,7 @@ const ProjectBoard: FC = () => {
               </div>
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-500 ease-out"
+                  className="bg-[gradient-to-r from-blue-500 to-blue-600 ]h-2 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${project.progress}%` }}
                 />
               </div>
