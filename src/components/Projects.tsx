@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useAuth0Sub } from '../context/AuthContext';
 
 interface Project {
   id: string;
@@ -13,54 +15,50 @@ interface Project {
   image: string;
 }
 
-const mockProjects: Project[] = [
-  {
-    id: '1',
-    name: 'Website Redesign',
-    description: 'Complete overhaul of the company website with modern design and improved user experience',
-    status: 'active',
-    progress: 75,
-    totalTickets: 24,
-    completedTickets: 18,
-    lastUpdated: '2 hours ago',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop',
-  },
-  {
-    id: '2',
-    name: 'Mobile App Development',
-    description: 'Development of a new mobile application for iOS and Android platforms',
-    status: 'active',
-    progress: 45,
-    totalTickets: 36,
-    completedTickets: 16,
-    lastUpdated: '1 day ago',
-    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=500&h=300&fit=crop',
-  },
-  {
-    id: '3',
-    name: 'API Integration',
-    description: 'Integration of third-party APIs for payment processing and authentication',
-    status: 'completed',
-    progress: 100,
-    totalTickets: 12,
-    completedTickets: 12,
-    lastUpdated: '1 week ago',
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500&h=300&fit=crop',
-  },
-  {
-    id: '4',
-    name: 'Database Migration',
-    description: 'Migration of legacy database to new cloud-based solution',
-    status: 'archived',
-    progress: 100,
-    totalTickets: 8,
-    completedTickets: 8,
-    lastUpdated: '2 months ago',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop',
-  },
-];
+async function fetchProjectsData(auth0Sub: string, setProjects: React.Dispatch<React.SetStateAction<Project[]>>) {
+  try {
+    const res = await fetch('/api/projects', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ auth0Id: auth0Sub }),
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch projects");
+
+    const data = await res.json();
+
+    const transformed = data.map((p: any): Project => ({
+      id: p.id.toString(),
+      name: p.name,
+      description: p.description,
+      status: p.status,
+      progress: Math.round((p.completed_tickets / p.total_tickets) * 100),
+      totalTickets: p.total_tickets,
+      completedTickets: p.completed_tickets,
+      lastUpdated: p.last_updated,
+      image: p.image_url,
+    }));
+    
+    setProjects(transformed);
+
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 const Projects: FC = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const sub = useAuth0Sub();
+
+  useEffect(() => {
+    if (sub) {
+      fetchProjectsData(sub, setProjects);
+    }
+    
+  }, [sub])
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
@@ -84,7 +82,9 @@ const Projects: FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockProjects.map((project) => (
+        {projects.length === 0 ? 
+            <div className="text-gray-500 dark:text-gray-300">No projects found.</div> : 
+          projects.map((project) => (
           <div key={project.id} className="relative group">
             {/* Gradient Glow Effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-600 dark:to-purple-600 rounded-lg blur opacity-5 group-hover:opacity-95 transition-all duration-500" />
@@ -134,7 +134,7 @@ const Projects: FC = () => {
                     {project.completedTickets} of {project.totalTickets} tickets completed
                   </span>
                   <span className="group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-medium">
-                    Updated {project.lastUpdated}
+                    {project.lastUpdated}
                   </span>
                 </div>
               </div>

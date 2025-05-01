@@ -79,6 +79,11 @@ export const useAuth = () => {
   return context;
 };
 
+export const useAuth0Sub = (): string | undefined => {
+  const { user } = useAuth();
+  return user?.sub;
+};
+
 export const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
