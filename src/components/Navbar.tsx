@@ -23,7 +23,7 @@ const Navbar = () => {
             </Link>
 
             <Link to="/projects" className="flex items-center space-x-2 group h-full">
-            <span className="flex items-center nav-item text-sm font-medium transition-all duration-100 h-full">
+              <span className="flex items-center nav-item text-sm font-medium transition-all duration-100 h-full">
                 Projects
               </span>
             </Link>
@@ -64,16 +64,16 @@ const Navbar = () => {
                 </svg>
               )}
             </button>
-            <button className="btn btn-primary flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200">
-              <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <Link to="/profile">
+            <Link to="/profile">
+              <button className="btn btn-primary flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200">
+                <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
                 <span>My Profile</span>
-              </Link>
-            </button>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
