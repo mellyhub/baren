@@ -46,7 +46,7 @@ const Profile: FC = () => {
   return (
     <div className="p-6">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-[#fffcfc] dark:bg-[#080404] rounded-lg shadow-md p-8 mb-6">
+        <div className="container-primary">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             <div className="relative">
               <img
@@ -86,7 +86,7 @@ const Profile: FC = () => {
           </div>
         </div>
 
-        <div className="bg-[#fffcfc] dark:bg-[#080404] rounded-lg shadow-md p-6">
+        <div className="container-primary">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Recent Activity</h2>
           <div className="space-y-4">
             {mockActivities.map((activity) => (
