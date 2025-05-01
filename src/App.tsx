@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import ActivityFeed from './components/ActivityFeed';
 import Projects from './components/Projects';
 import ProjectBoard from './components/ProjectBoard';
+import Profile from './components/Profile';
 import { ThemeProvider } from './context/ThemeContext';
 
 interface Activity {
@@ -59,6 +60,10 @@ function App() {
               <Route
                 path="/projects/:id"
                 element={<ProjectBoard />}
+              />
+              <Route
+                path="/profile"
+                element={<Profile />}
               />
             </Routes>
           </main>
