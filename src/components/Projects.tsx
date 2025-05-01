@@ -85,17 +85,19 @@ const Projects: FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {mockProjects.map((project) => (
-          <div className="w-full rounded-sm p-px bg-gradient-to-b from-blue-300 to-pink-300 dark:from-blue-800 dark:to-purple-800">
+          <div key={project.id} className="relative group">
+            {/* Gradient Glow Effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-600 dark:to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-40 transition-all duration-500" />
+            
             <Link
-              key={project.id}
               to={`/projects/${project.id}`}
-              className="group block bg-[#fffcfc] dark:bg-[#080404] rounded-sm shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
+              className="relative block bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
               <div className="relative h-48 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent z-10" />
                 <img
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-200"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-4 right-4 z-20">
                   <span className={`px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 capitalize ${getStatusColor(project.status)}`}>
@@ -108,11 +110,12 @@ const Projects: FC = () => {
                   </h2>
                 </div>
               </div>
+              
               <div className="p-6">
                 <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-normal">
                   {project.description}
                 </p>
-
+                
                 <div className="mb-4">
                   <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-1 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200 font-medium">
                     <span>Progress</span>
