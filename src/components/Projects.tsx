@@ -87,7 +87,7 @@ const Projects: FC = () => {
         {mockProjects.map((project) => (
           <div key={project.id} className="relative group">
             {/* Gradient Glow Effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-600 dark:to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-40 transition-all duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-600 dark:to-purple-600 rounded-lg blur opacity-5 group-hover:opacity-95 transition-all duration-500" />
             
             <Link
               to={`/projects/${project.id}`}
@@ -97,7 +97,7 @@ const Projects: FC = () => {
                 <img
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute top-4 right-4 z-20">
                   <span className={`px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 capitalize ${getStatusColor(project.status)}`}>
