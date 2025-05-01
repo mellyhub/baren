@@ -19,7 +19,7 @@
   }
   
   .btn-primary {
-    @apply bg-gray-800 text-white hover:bg-gray-700 dark:bg-[#262626] dark:hover:bg-[#333333];
+    @apply bg-blue-500 text-white hover:bg-blue-600 dark:bg-[#262626] dark:hover:bg-[#333333];
   }
   
   .btn-secondary {

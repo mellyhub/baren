@@ -13,7 +13,7 @@ interface ActivityFeedProps {
 
 const ActivityFeed: FC<ActivityFeedProps> = ({ activities }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors duration-200">
+    <div className="bg-white dark:bg-gray-800 rounded-md shadow-md p-6 transition-colors duration-200">
       <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Activity Feed</h2>
       <div className="space-y-4">
         {activities.map((activity) => (

@@ -88,10 +88,9 @@ const Projects: FC = () => {
           <Link
             key={project.id}
             to={`/projects/${project.id}`}
-            className="group block bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden"
-          >
+            className="group block bg-[#fffcfc] dark:bg-[#080404] rounded-sm shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
             <div className="relative h-48 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent z-10" />
               <img
                 src={project.image}
                 alt={project.name}
@@ -103,7 +102,7 @@ const Projects: FC = () => {
                 </span>
               </div>
               <div className="absolute bottom-4 left-4 z-20">
-                <h2 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors duration-200 tracking-wide">
+                <h2 className="text-xl font-bold text-gray-100 group-hover:text-white transition-colors duration-200 tracking-wide">
                   {project.name}
                 </h2>
               </div>
