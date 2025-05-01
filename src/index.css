@@ -14,12 +14,17 @@
 }
 
 @layer components {
+
+  .nav-item {
+    @apply hover:border-b-2 hover:border-blue-500;
+  }
+
   .btn {
     @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
   }
   
   .btn-primary {
-    @apply bg-blue-500 text-white hover:bg-blue-600 dark:bg-[#262626] dark:hover:bg-[#333333];
+    @apply bg-blue-600 text-white hover:bg-blue-700
   }
   
   .btn-secondary {
