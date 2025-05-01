@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
-import ActivityFeed from './components/ActivityFeed';
-import Projects from './components/Projects';
-import ProjectBoard from './components/ProjectBoard';
-import Profile from './components/Profile';
 import { ThemeProvider } from './context/ThemeContext';
+
+// Lazy load components
+const ActivityFeed = lazy(() => import('./components/ActivityFeed'));
+const Projects = lazy(() => import('./components/Projects'));
+const ProjectBoard = lazy(() => import('./components/ProjectBoard'));
+const Profile = lazy(() => import('./components/Profile'));
 
 interface Activity {
   id: string;
@@ -48,24 +51,30 @@ function App() {
         <div className="min-h-screen bg-gray-100 dark:bg-[#141414]">
           <Navbar />
           <main className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <Routes>
-              <Route
-                path="/"
-                element={<ActivityFeed activities={mockActivities} />}
-              />
-              <Route
-                path="/projects"
-                element={<Projects />}
-              />
-              <Route
-                path="/projects/:id"
-                element={<ProjectBoard />}
-              />
-              <Route
-                path="/profile"
-                element={<Profile />}
-              />
-            </Routes>
+            <Suspense fallback={
+              <div className="flex items-center justify-center min-h-[60vh]">
+                <div className="animate-pulse text-gray-600 dark:text-gray-300">Loading...</div>
+              </div>
+            }>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<ActivityFeed activities={mockActivities} />}
+                />
+                <Route
+                  path="/projects"
+                  element={<Projects />}
+                />
+                <Route
+                  path="/projects/:id"
+                  element={<ProjectBoard />}
+                />
+                <Route
+                  path="/profile"
+                  element={<Profile />}
+                />
+              </Routes>
+            </Suspense>
           </main>
         </div>
       </Router>
