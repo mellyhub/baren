@@ -85,56 +85,58 @@ const Projects: FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {mockProjects.map((project) => (
-          <Link
-            key={project.id}
-            to={`/projects/${project.id}`}
-            className="group block bg-[#fffcfc] dark:bg-[#080404] rounded-sm shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
-            <div className="relative h-48 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent z-10" />
-              <img
-                src={project.image}
-                alt={project.name}
-                className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-200"
-              />
-              <div className="absolute top-4 right-4 z-20">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 capitalize ${getStatusColor(project.status)}`}>
-                  {project.status}
-                </span>
-              </div>
-              <div className="absolute bottom-4 left-4 z-20">
-                <h2 className="text-xl font-bold text-gray-100 group-hover:text-white transition-colors duration-200 tracking-wide">
-                  {project.name}
-                </h2>
-              </div>
-            </div>
-            <div className="p-6">
-              <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-normal">
-                {project.description}
-              </p>
-              
-              <div className="mb-4">
-                <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-1 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200 font-medium">
-                  <span>Progress</span>
-                  <span>{project.progress}%</span>
+          <div className="w-full rounded-sm p-px bg-gradient-to-b from-blue-300 to-pink-300 dark:from-blue-800 dark:to-purple-800">
+            <Link
+              key={project.id}
+              to={`/projects/${project.id}`}
+              className="group block bg-[#fffcfc] dark:bg-[#080404] rounded-sm shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent z-10" />
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-200"
+                />
+                <div className="absolute top-4 right-4 z-20">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 capitalize ${getStatusColor(project.status)}`}>
+                    {project.status}
+                  </span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-                  <div
-                    className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-500 ease-out"
-                    style={{ width: `${project.progress}%` }}
-                  />
+                <div className="absolute bottom-4 left-4 z-20">
+                  <h2 className="text-xl font-bold text-gray-100 group-hover:text-white transition-colors duration-200 tracking-wide">
+                    {project.name}
+                  </h2>
                 </div>
               </div>
+              <div className="p-6">
+                <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-normal">
+                  {project.description}
+                </p>
 
-              <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
-                <span className="group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-medium">
-                  {project.completedTickets} of {project.totalTickets} tickets completed
-                </span>
-                <span className="group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-medium">
-                  Updated {project.lastUpdated}
-                </span>
+                <div className="mb-4">
+                  <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-1 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200 font-medium">
+                    <span>Progress</span>
+                    <span>{project.progress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${project.progress}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                  <span className="group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-medium">
+                    {project.completedTickets} of {project.totalTickets} tickets completed
+                  </span>
+                  <span className="group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-medium">
+                    Updated {project.lastUpdated}
+                  </span>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         ))}
       </div>
     </div>

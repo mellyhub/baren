@@ -56,8 +56,8 @@ const Navbar = () => {
             </form>
           </div>
 
-          <div className="flex items-center">
-            <div className="hidden sm:flex sm:items-center sm:space-x-4">
+          <div className="flex items-center h-full">
+            <div className="hidden sm:flex sm:items-center sm:space-x-4 h-full">
               <Link to="/" className="flex items-center space-x-2 group h-full">
                 <span className="flex items-center nav-item text-sm font-medium h-full border-b-2 border-transparent">
                   Activity Feed
