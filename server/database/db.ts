@@ -4,6 +4,7 @@ import path from 'path';
 const dbPath = path.resolve(__dirname, './database.db');
 
 export interface Project {
+    id: number;
     name: string;
     description: string;
     status: 'active' | 'archived' | 'completed';
@@ -43,10 +44,33 @@ class DatabaseService {
         this.db.prepare(sql).run();
     }
 
+    public getUserByAuth0Id(auth0Id: string): any {
+        const sql = `
+            SELECT * FROM users
+            WHERE auth0_id = ?
+        `;
+        let user = this.db.prepare(sql).get(auth0Id);
+    
+        if (!user) {
+            this.insertUserIfNotExists(auth0Id);
+            user = this.db.prepare(sql).get(auth0Id);
+        }
+    
+        return user;
+    }
+    
+    private insertUserIfNotExists(auth0_id: string): void {
+        const sql = `
+            INSERT OR IGNORE INTO users (auth0_id)
+            VALUES (?)
+        `;
+        this.db.prepare(sql).run(auth0_id);
+    }
+
     private createProjectsTable(): void {
         const sql = `
             CREATE TABLE IF NOT EXISTS projects (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 user_id INTEGER NOT NULL,
                 name TEXT NOT NULL,
                 description TEXT,
@@ -59,28 +83,13 @@ class DatabaseService {
             )
         `;
         this.db.prepare(sql).run();
-      }
-
-    public getUserByAuth0Id(auth0Id: string): User {
-        const sql = `SELECT * FROM users WHERE auth0_id = ?`;
-        let user = this.db.prepare(sql).get(auth0Id);
-    
-        if (!user) {
-          this.insertUserIfNotExists(auth0Id);
-          user = this.db.prepare(sql).get(auth0Id);
-        }
-    
-        return user as User;
-    }
-    
-    private insertUserIfNotExists(auth0_id: string): void {
-        const sql = `INSERT OR IGNORE INTO users (auth0_id) VALUES (?)`;
-        this.db.prepare(sql).run(auth0_id);
     }
 
-    public insertProject(project: Project): void {
+    public insertProject(userId: number, project: Project): void {
         const sql = `
             INSERT INTO projects (
+                id,
+                user_id,
                 name,
                 description,
                 status,
@@ -88,9 +97,11 @@ class DatabaseService {
                 completed_tickets,
                 last_updated,
                 image_url
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         this.db.prepare(sql).run(
+            project.id,
+            userId,
             project.name,
             project.description,
             project.status,
@@ -99,7 +110,7 @@ class DatabaseService {
             project.lastUpdated,
             project.image
         );
-    } 
+    }    
 
     public getProjectsByUserId(userId: number): Project[] {
         const sql = `SELECT * FROM projects WHERE user_id = ? ORDER BY last_updated DESC`;
@@ -126,6 +137,7 @@ class DatabaseService {
             project.completedTickets,
             project.lastUpdated,
             project.image,
+            project.id
         );
     }
     
