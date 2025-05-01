@@ -21,7 +21,11 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="space-x-2 group">
               <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                Baren
+              <img
+                src="src/assets/Baren logo.png"
+                alt="Baren"
+                className="w-12 h-12 rounded-[0.1em]"
+              />           
               </span>
             </Link>
           </div>
