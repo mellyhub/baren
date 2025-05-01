@@ -44,7 +44,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+        <div className="min-h-screen bg-gray-100 dark:bg-[#141414]">
           <Navbar />
           <main className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <Routes>

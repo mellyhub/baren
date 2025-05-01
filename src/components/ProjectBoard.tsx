@@ -112,9 +112,9 @@ const ProjectBoard: FC = () => {
 
   return (
     <div className="p-6">
-      <div className="group mb-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-all duration-200 hover:shadow-lg">
+      <div className="group mb-8 bg-white dark:bg-gray-800 shadow-md p-6 transition-all duration-200 hover:shadow-lg">
         <div className="flex gap-6">
-          <div className="relative w-48 h-48 flex-shrink-0 rounded-lg overflow-hidden">
+          <div className="relative w-48 h-48 flex-shrink-0 overflow-hidden">
             <img
               src={project.image}
               alt={project.name}
@@ -157,7 +157,7 @@ const ProjectBoard: FC = () => {
               </div>
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-500 ease-out"
+                  className="bg-[gradient-to-r from-blue-500 to-blue-600 ]h-2 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${project.progress}%` }}
                 />
               </div>
