@@ -51,7 +51,7 @@ function App() {
     <ThemeProvider>
       <Router>
         <AuthProvider>
-          <div className="min-h-screen bg-gray-100 dark:bg-[#141414]">
+          <div className="min-h-screen bg-gray-100 dark:bg-[#111111]">
             <Routes>
               <Route
                 path="/login"

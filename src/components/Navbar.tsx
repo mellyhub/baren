@@ -18,14 +18,14 @@ const Navbar = () => {
         </div>
         <div className="flex justify-end h-16">
           <div className="hidden sm:flex sm:items-center sm:space-x-4">
-            <Link to="/" className="flex items-center space-x-2 group">
-              <span className="flex items-center px-3 py-2 text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:underline">
+            <Link to="/" className="flex items-center space-x-2 group h-full">
+            <span className="flex items-center nav-item text-sm font-medium h-full border-b-2 border-transparent">
                 Activity Feed
               </span>
             </Link>
 
-            <Link to="/projects" className="flex items-center space-x-2 group">
-              <span className="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:underline">
+            <Link to="/projects" className="flex items-center space-x-2 group h-full">
+              <span className="flex items-center nav-item text-sm font-medium h-full border-b-2 border-transparent">
                 Projects
               </span>
             </Link>
