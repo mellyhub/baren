@@ -104,60 +104,60 @@ const ProjectBoard: FC = () => {
 
   if (!project) {
     return (
-      <div className="p-6 text-center">
+      <div className="flex items-center justify-center min-h-[60vh]">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Project not found</h1>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <div className="group mb-8 bg-white dark:bg-gray-800 shadow-md p-6 transition-all duration-200 hover:shadow-lg">
-        <div className="flex gap-6">
-          <div className="relative w-48 h-48 flex-shrink-0 overflow-hidden">
-            <img
-              src={project.image}
-              alt={project.name}
-              className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-200"
-            />
-          </div>
-          <div className="flex-1">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 tracking-wide">
-                  {project.name}
-                </h1>
-                <p className="text-gray-600 dark:text-gray-300 mt-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-normal">
-                  {project.description}
-                </p>
-              </div>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${
-                project.status === 'active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' :
-                project.status === 'completed' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' :
-                'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
-              }`}>
-                {project.status}
-              </span>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Project Header */}
+      <div className="relative rounded-xl overflow-hidden shadow-lg mb-8 group">
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/80 to-transparent z-10" />
+        <img
+          src={project.image}
+          alt={project.name}
+          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 z-20 p-8 flex flex-col justify-between">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-4xl font-bold text-white group-hover:text-blue-400 transition-colors duration-200 tracking-wide">
+                {project.name}
+              </h1>
+              <p className="text-gray-200 mt-2 max-w-2xl group-hover:text-gray-100 transition-colors duration-200">
+                {project.description}
+              </p>
             </div>
-            
-            <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-medium">
+            <span className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+              project.status === 'active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' :
+              project.status === 'completed' ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' :
+              'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+            }`}>
+              {project.status}
+            </span>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-center space-x-6 text-sm text-gray-200">
+              <span className="group-hover:text-white transition-colors duration-200 font-medium">
                 {project.completedTickets} of {project.totalTickets} tickets completed
               </span>
-              <span className="text-gray-300 dark:text-gray-600">•</span>
-              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200 font-medium">
+              <span className="text-gray-400">•</span>
+              <span className="group-hover:text-white transition-colors duration-200 font-medium">
                 Updated {project.lastUpdated}
               </span>
             </div>
 
-            <div className="mt-4">
-              <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-1 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200 font-medium">
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm text-gray-200 group-hover:text-white transition-colors duration-200 font-medium">
                 <span>Overall Progress</span>
                 <span>{project.progress}%</span>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-gray-700/50 rounded-full h-2.5 overflow-hidden">
                 <div
-                  className="bg-[gradient-to-r from-blue-500 to-blue-600 ]h-2 rounded-full transition-all duration-500 ease-out"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-2.5 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${project.progress}%` }}
                 />
               </div>
@@ -166,10 +166,13 @@ const ProjectBoard: FC = () => {
         </div>
       </div>
 
-      <div className="group bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-all duration-200 hover:shadow-lg">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 tracking-wide">
-          Kanban Board
-        </h2>
+      {/* Kanban Board */}
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white tracking-wide">
+            Kanban Board
+          </h2>
+        </div>
         <KanbanBoard tickets={tickets} />
       </div>
     </div>
