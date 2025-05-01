@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, logout } = useAuth();
 
   return (
     <nav className="bg-white dark:bg-[#141414] border-b border-gray-200 dark:border-[#262626]">
@@ -10,25 +12,25 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link to="/" className="space-x-2 group">
             <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              Logo goes here
+              Baren
             </span>
           </Link>
         </div>
         <div className="flex justify-end h-16">
           <div className="hidden sm:flex sm:items-center sm:space-x-4">
-            <Link to="/" className="flex items-center space-x-2 group h-full">
-              <span className="flex items-center nav-item text-sm font-medium transition-all duration-100 h-full">
+            <Link to="/" className="flex items-center space-x-2 group">
+              <span className="flex items-center px-3 py-2 text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:underline">
                 Activity Feed
               </span>
             </Link>
 
-            <Link to="/projects" className="flex items-center space-x-2 group h-full">
-              <span className="flex items-center nav-item text-sm font-medium transition-all duration-100 h-full">
+            <Link to="/projects" className="flex items-center space-x-2 group">
+              <span className="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:underline">
                 Projects
               </span>
             </Link>
           </div>
-          <div className="flex items-center space-x-4 ml-4">
+          <div className="flex items-center space-x-4">
             <button
               onClick={toggleTheme}
               className="p-2 rounded-md hover:bg-gray-50 dark:hover:bg-[#262626] transition-colors duration-200 focus:outline-none"
@@ -64,16 +66,24 @@ const Navbar = () => {
                 </svg>
               )}
             </button>
-            <Link to="/profile">
-              <button className="btn btn-primary flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200">
-                <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <span>My Profile</span>
-              </button>
-            </Link>
+
+            <div className="relative group">
+              <Link to="/profile">
+                <button className="btn btn-primary flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200">
+                  <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <span>My Profile</span>
+                </button>
+              </Link>
+              {/* 
+              Unnused code for displaying user name or email
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {user?.name || user?.email}
+                </span> */}
+            </div>
           </div>
         </div>
       </div>
