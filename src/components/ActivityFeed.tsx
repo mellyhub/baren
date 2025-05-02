@@ -17,7 +17,7 @@ const ActivityFeed: FC<ActivityFeedProps> = ({ activities }) => {
     <div className="space-y-6">
       <TicketGraph />
       
-      <div className="bg-[#fffcfc] dark:bg-[#080404] rounded-lg shadow-md">
+      <div className="bg-[#fffcfc] dark:bg-neutral-900 rounded-lg shadow-md">
         <div className="p-6">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Recent Activity</h2>
           <div className="space-y-4">

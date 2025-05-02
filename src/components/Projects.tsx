@@ -91,7 +91,7 @@ const Projects: FC = () => {
             
             <Link
               to={`/projects/${project.id}`}
-              className="relative block bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
+              className="relative block bg-white dark:bg-neutral-900 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden">
               <div className="relative h-48 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent z-10" />
                 <img

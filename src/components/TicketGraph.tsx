@@ -39,7 +39,7 @@ const TicketGraph: FC = () => {
   const percentageChange = ((currentMonth.completed - previousMonth.completed) / previousMonth.completed * 100).toFixed(1);
 
   return (
-    <div className="bg-[#fffcfc] dark:bg-[#080404] rounded-lg shadow-md p-6">
+    <div className="bg-[#fffcfc] dark:bg-neutral-900 rounded-lg shadow-md p-6">
       <div className="flex justify-between items-start mb-6">
         <div>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
