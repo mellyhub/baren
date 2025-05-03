@@ -4,7 +4,7 @@ import path from 'path';
 const dbPath = path.resolve(__dirname, './database.db');
 
 export interface Project {
-    id: number;
+    id?: number;
     name: string;
     description: string;
     status: 'active' | 'archived' | 'completed';
@@ -15,8 +15,8 @@ export interface Project {
 }
 
 interface User {
-    id: number,
-    auth0_id: string
+    id: number;
+    auth0_id: string;
 }
 
 class DatabaseService {
@@ -31,6 +31,7 @@ class DatabaseService {
     private initializeDatabase(): void {
         this.createUsersTable();
         this.createProjectsTable();
+        this.createProjectUsersTable();
         console.log(`Database initialized at: ${dbPath}`);
     }
 
@@ -44,11 +45,37 @@ class DatabaseService {
         this.db.prepare(sql).run();
     }
 
-    public getUserByAuth0Id(auth0Id: string): any {
+    private createProjectsTable(): void {
         const sql = `
-            SELECT * FROM users
-            WHERE auth0_id = ?
+            CREATE TABLE IF NOT EXISTS projects (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                description TEXT,
+                status TEXT CHECK(status IN ('active', 'archived', 'completed')) DEFAULT 'active',
+                total_tickets INTEGER DEFAULT 0,
+                completed_tickets INTEGER DEFAULT 0,
+                last_updated TEXT,
+                image_url TEXT
+            )
         `;
+        this.db.prepare(sql).run();
+    }
+
+    private createProjectUsersTable(): void {
+        const sql = `
+            CREATE TABLE IF NOT EXISTS project_users (
+                project_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
+                PRIMARY KEY (project_id, user_id),
+                FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )
+        `;
+        this.db.prepare(sql).run();
+    }
+
+    public getUserByAuth0Id(auth0Id: string): User {
+        const sql = `SELECT * FROM users WHERE auth0_id = ?`;
         let user = this.db.prepare(sql).get(auth0Id);
     
         if (!user) {
@@ -56,40 +83,17 @@ class DatabaseService {
             user = this.db.prepare(sql).get(auth0Id);
         }
     
-        return user;
+        return user as User;
     }
     
     private insertUserIfNotExists(auth0_id: string): void {
-        const sql = `
-            INSERT OR IGNORE INTO users (auth0_id)
-            VALUES (?)
-        `;
+        const sql = `INSERT OR IGNORE INTO users (auth0_id) VALUES (?)`;
         this.db.prepare(sql).run(auth0_id);
-    }
-
-    private createProjectsTable(): void {
-        const sql = `
-            CREATE TABLE IF NOT EXISTS projects (
-                id INTEGER PRIMARY KEY,
-                user_id INTEGER NOT NULL,
-                name TEXT NOT NULL,
-                description TEXT,
-                status TEXT CHECK(status IN ('active', 'archived', 'completed')) DEFAULT 'active',
-                total_tickets INTEGER DEFAULT 0,
-                completed_tickets INTEGER DEFAULT 0,
-                last_updated TEXT,
-                image_url TEXT,
-                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-            )
-        `;
-        this.db.prepare(sql).run();
     }
 
     public insertProject(userId: number, project: Project): void {
         const sql = `
             INSERT INTO projects (
-                id,
-                user_id,
                 name,
                 description,
                 status,
@@ -97,11 +101,9 @@ class DatabaseService {
                 completed_tickets,
                 last_updated,
                 image_url
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
-        this.db.prepare(sql).run(
-            project.id,
-            userId,
+        const result = this.db.prepare(sql).run(
             project.name,
             project.description,
             project.status,
@@ -110,14 +112,21 @@ class DatabaseService {
             project.lastUpdated,
             project.image
         );
-    }    
 
-    public getProjectsByUserId(userId: number): Project[] {
-        const sql = `SELECT * FROM projects WHERE user_id = ? ORDER BY last_updated DESC`;
-        return this.db.prepare(sql).all(userId) as Project[];
+        const projectId = result.lastInsertRowid;
+
+        this.insertProjectUserAssociation(projectId, userId);
     }
 
-    public updateProject(project: Project): void {
+    private insertProjectUserAssociation(projectId: number | bigint, userId: number): void {
+        const sql = `
+            INSERT INTO project_users (project_id, user_id)
+            VALUES (?, ?)
+        `;
+        this.db.prepare(sql).run(projectId, userId);
+    }
+
+    public updateProject(projectId: number, userIds: number[], project: Project): void {
         const sql = `
             UPDATE projects SET
                 name = ?,
@@ -137,10 +146,16 @@ class DatabaseService {
             project.completedTickets,
             project.lastUpdated,
             project.image,
-            project.id
+            projectId
         );
+
+        this.db.prepare(`DELETE FROM project_users WHERE project_id = ?`).run(projectId);
+
+        userIds.forEach(userId => {
+            this.insertProjectUserAssociation(projectId, userId);
+        });
     }
-    
+
     public deleteProject(id: number): void {
         const sql = `DELETE FROM projects WHERE id = ?`;
         this.db.prepare(sql).run(id);
@@ -149,6 +164,17 @@ class DatabaseService {
     public deleteUser(id: number): void {
         const sql = `DELETE FROM users WHERE id = ?`;
         this.db.prepare(sql).run(id);
+    }
+
+    public getProjectsByUserId(userId: number): Project[] {
+        const sql = `
+            SELECT projects.*
+            FROM projects
+            JOIN project_users ON project_users.project_id = projects.id
+            WHERE project_users.user_id = ?
+            ORDER BY projects.last_updated DESC
+        `;
+        return this.db.prepare(sql).all(userId) as Project[];
     }
 }
 

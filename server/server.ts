@@ -13,7 +13,6 @@ app.use(express.json());
 
 /*
 const project: Project = {
-    id: 2,
     name: "Untitled Roguelike",
     description: "Phaser 3 game",
     status: 'active',
@@ -23,7 +22,7 @@ const project: Project = {
     image: 'https://miro.medium.com/v2/resize:fit:1023/1*-R1fpIXRI6JsvpHaykU-gg.png',
 };
 
-dbService.insertProject(4, project);
+dbService.insertProject(1, project);
 */
 
 app.post("/api/projects", (req, res) => {
